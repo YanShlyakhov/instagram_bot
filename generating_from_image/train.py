@@ -3,7 +3,7 @@ from pickle import load
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.utils import to_categorical
-from tensorflow.keras.utils import plot_model
+#from tensorflow.keras.utils import plot_model
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input
 from tensorflow.keras.layers import Dense
@@ -111,7 +111,7 @@ def create_sequences(tokenizer, max_length, descriptions, photos, vocab_size):
 # define the captioning model
 def define_model(vocab_size, max_length):
 	# feature extractor model
-	inputs1 = Input(shape=(4096,))
+	inputs1 = Input(shape=(1000,))
 	fe1 = Dropout(0.5)(inputs1)
 	fe2 = Dense(256, activation='relu')(fe1)
 	# sequence model
@@ -128,7 +128,7 @@ def define_model(vocab_size, max_length):
 	model.compile(loss='categorical_crossentropy', optimizer='adam')
 	# summarize model
 	print(model.summary())
-	plot_model(model, to_file='model.png', show_shapes=True)
+	#plot_model(model, to_file='model.png', show_shapes=True)
 	return model
 
 # train dataset
@@ -176,4 +176,4 @@ model = define_model(vocab_size, max_length)
 filepath = 'model-ep{epoch:03d}-loss{loss:.3f}-val_loss{val_loss:.3f}.h5'
 checkpoint = ModelCheckpoint(filepath, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
 # fit model
-model.fit([X1train, X2train], ytrain, epochs=20, verbose=2, callbacks=[checkpoint], validation_data=([X1test, X2test], ytest))
+model.fit([X1train, X2train], ytrain, epochs=20, verbose=1, callbacks=[checkpoint], validation_data=([X1test, X2test], ytest))
