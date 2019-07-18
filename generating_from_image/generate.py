@@ -7,7 +7,7 @@ from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.applications.vgg16 import preprocess_input
 from tensorflow.keras.models import Model
 from tensorflow.keras.models import load_model
-from genquest.quest import genQuestion
+from quest import genQuestion
 
 # extract features from each photo in the directory
 def extract_features(filename):
